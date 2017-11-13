@@ -31,9 +31,11 @@ On your Mac or Linux machine:
 5.1. Note that cred.txt is in the .gitignore file
 
 5.2. 
-```cat - > cred.txt
+```
+cat - > cred.txt
 wificlient:mywifi:password1
-wifihost:HoneyPot:HoneyPot```
+wifihost:HoneyPot:HoneyPot
+```
 
 5.3. ampy put cred.txt
 
