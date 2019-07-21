@@ -1,0 +1,3 @@
+[submodule "micropython-bmp180"]
+	path = mp_bmp180
+	url = https://github.com/micropython-IMU/micropython-bmp180.git

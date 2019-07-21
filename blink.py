@@ -11,3 +11,4 @@ tim4 = Timer(4)
 tim4.init(period=300, mode=machine.Timer.PERIODIC, callback=toggleLED)
 time.sleep(20)
 tim4.deinit()
+
