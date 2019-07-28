@@ -7,16 +7,20 @@ def do_connect(verbose = True):
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     creddict = {}
-    hostpass = None
+    ssid_pass = None
     for credline in open('cred.txt').readlines():
         try:
-            if credline.strip().startswith('#'):
+            credline=credline.strip()
+            if credline.startswith('#'):
                 continue
+            if credline.startswith('hostname'):
+                # This shows up in your router.
+                wlan.config(dhcp_hostname=credline.split(':')[1].strip())
             role, name, password = [s.strip() for s in credline.split(":")]
             if role.lower() == 'wificlient':
                 creddict[name] = password
             elif role.lower() == 'wifihost':
-                hostpass = name, password
+                ssid_pass = name, password
         except:
             pass
     netnames = []
@@ -32,6 +36,10 @@ def do_connect(verbose = True):
                     time.sleep(0.1)
                 for i in range(10):
                     if wlan.isconnected():
+                        try:
+                            ssid_pass = ssid_pass[0]+wlan.ifconfig()[0], ssid_pass[1]
+                        except:
+                            pass
                         if verbose:
                             if verbose:
                                 print("Connected to network {} and IP = {}"
@@ -52,12 +60,12 @@ def do_connect(verbose = True):
     else:
         if verbose:
             print("Could not connect to any networks among", netnames, file=sys.stderr)
-    if hostpass:
+    if ssid_pass:
         ap = network.WLAN(network.AP_IF)
         ap.active(True)
-        ap.config(essid=hostpass[0])
-        if hostpass[1]:
-            ap.config(password=hostpass[1])
+        ap.config(essid=ssid_pass[0])
+        if ssid_pass[1]:
+            ap.config(password=ssid_pass[1])
         if verbose:
-            print("AP set up as {}".format(hostpass[0]), file=sys.stderr)
+            print("AP set up as {}".format(ssid_pass[0]), file=sys.stderr)
 
