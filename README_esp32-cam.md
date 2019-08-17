@@ -90,7 +90,9 @@ At that point, you can go to your browser and connect to the webcam server:
 http://192.168.1.114/?flash=true
 (replacing the 192.168.1.114 with whatever IP address is in use.)
 
-
+According to
+https://github.com/tsaarni/esp32-micropython-webcam
+you should also modify line 57 of lib/uasyncio/__init__.py
 
 
 
